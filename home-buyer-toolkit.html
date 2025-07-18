@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Buyer Toolkit</title>
+  <style>
+    /* --- CSS for a clean, professional look --- */
+    body {
+      background: #f4f6f8;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      max-width: 1280px;
+      margin: 0 auto;
+      min-height: 100vh;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .header {
+      background: #2563eb;
+      color: #fff;
+      padding: 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+    .tab-navigation {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: center;
+      padding: 0 2rem;
+    }
+    .tab-button {
+      background: transparent;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-button:hover {
+      color: #2563eb;
+      background: #f8fafc;
+    }
+    .tab-button.active {
+      color: #2563eb;
+      background: #eff6ff;
+      border-bottom-color: #2563eb;
+    }
+    .tab-content {
+      padding: 2rem;
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Calculator Styles */
+    .calculator-form {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      color: #34495e;
+      font-weight: 500;
+    }
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .button-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    button {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #1e40af;
+    }
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #222;
+      border: 1.5px solid #d1d5db;
+    }
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+    .results {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      color: #222;
+    }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .result-label {
+      font-weight: 500;
+    }
+    .result-value {
+      font-family: monospace;
+    }
+    
+    /* Saved Properties Styles */
+    .saved-section {
+      margin-top: 2rem;
+    }
+    .saved-header {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .saved-header h2 {
+      font-size: 1.1rem;
+      color: #2d3a4b;
+      margin: 0;
+    }
+    .property-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #f9fafb;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.98rem;
+    }
+    .property-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .property-name {
+      font-weight: 600;
+      color: #2563eb;
+      font-size: 1.1rem;
+    }
+    .property-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-small {
+      padding: 0.3rem 0.8rem;
+      font-size: 0.9rem;
+    }
+    .btn-success {
+      background: #22c55e;
+      color: #fff;
+    }
+    .btn-success:hover {
+      background: #16a34a;
+    }
+    .inspection-status {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+    .inspection-complete {
+      color: #22c55e;
+      font-weight: 500;
+    }
+    .inspection-pending {
+      color: #eab308;
+      font-weight: 500;
+    }
+    
+    /* Checklist Styles */
+    .checklist-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .property-name-input {
+      background: #f8fafc;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .overall-progress {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .overall-progress h2 {
+      margin: 0 0 0.5rem 0;
+      color: #2d3a4b;
+      font-size: 1.2rem;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    .progress-fill {
+      height: 100%;
+      transition: width 0.3s ease, background-color 0.3s ease;
+      border-radius: 4px;
+    }
+    .progress-fill.red { background-color: #ef4444; }
+    .progress-fill.yellow { background-color: #eab308; }
+    .progress-fill.green { background-color: #22c55e; }
+    .category {
+      margin-bottom: 2rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .category-header {
+      background: #f3f4f6;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .category-header h3 {
+      margin: 0;
+      color: #2d3a4b;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .category-progress {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-top: 0.3rem;
+    }
+    .category-items {
+      padding: 1rem 1.5rem;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .checklist-item:hover {
+      background-color: #f9fafb;
+    }
+    .checklist-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-right: 0.8rem;
+      cursor: pointer;
+      accent-color: #2563eb;
+    }
+    .checklist-item label {
+      cursor: pointer;
+      flex: 1;
+      color: #374151;
+      font-size: 1rem;
+    }
+    .checklist-item.completed label {
+      text-decoration: line-through;
+      color: #6b7280;
+    }
+    
+    /* Dashboard Styles */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .dashboard-section {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+    .dashboard-section h3 {
+      margin: 0 0 1rem 0;
+      color: #2d3a4b;
+      font-size: 1.2rem;
+    }
+    .quick-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .stat-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #2563eb;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-top: 0.3rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .tab-navigation {
+        flex-direction: column;
+        padding: 0;
+      }
+      .tab-button {
+        border-bottom: 1px solid #e5e7eb;
+        border-right: none;
+      }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .button-row {
+        flex-direction: column;
+      }
+      .property-actions {
+        flex-direction: column;
+      }
+    }
+    
+    @media print {
+      .tab-navigation, .header, .quick-actions {
+        display: none;
+      }
+      .tab-content {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Home Buyer Toolkit</h1>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+      <button class="tab-button active" onclick="showTab('dashboard')">Dashboard</button>
+      <button class="tab-button" onclick="showTab('calculator')">Calculator</button>
+      <button class="tab-button" onclick="showTab('checklist')">Inspection Checklist</button>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div id="dashboard" class="tab-content active">
+      <div class="dashboard-grid">
+        <div class="dashboard-section">
+          <h3>Quick Actions</h3>
+          <div class="quick-actions">
+            <button class="btn-primary" onclick="showTab('calculator')">Add New Property</button>
+            <button class="btn-primary" onclick="showTab('checklist')">Start Inspection</button>
+            <button class="btn-secondary" onclick="exportData()">Export Data</button>
+          </div>
+        </div>
+        <div class="dashboard-section">
+          <h3>Overview</h3>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number" id="totalProperties">0</div>
+              <div class="stat-label">Properties</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="inspectionsComplete">0</div>
+              <div class="stat-label">Inspections Complete</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-section">
+        <h3>My Properties</h3>
+        <div id="dashboardProperties"></div>
+      </div>
+    </div>
+
+    <!-- Calculator Tab -->
+    <div id="calculator" class="tab-content">
+      <div class="container" style="max-width:1280px; margin:auto;">
+        <h1>Property Expense Calculator</h1>
+        <!-- Input Form -->
+        <form id="expense-form" style="display: flex; flex-direction: column; gap: 0; max-width:700px; margin:auto;">
+          <!-- Property Name (optional) -->
+          <label for="propertyName">Property Name (optional)</label>
+          <input type="text" id="propertyName" style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; box-sizing: border-box;" placeholder="e.g. 555 W Madison Unit 2005">
+          <!-- Home Price Input -->
+          <label for="homePrice">Home Price ($)</label>
+          <input type="text" id="homePrice" required>
+
+          <!-- Down Payment Percentage Input -->
+          <label for="downPayment">Down Payment (%)</label>
+          <input type="number" id="downPayment" min="0" max="100" step="0.1" required>
+
+          <!-- Interest Rate Input -->
+          <label for="interestRate">Interest Rate (Annual %)</label>
+          <input type="number" id="interestRate" min="0" step="0.01" required>
+
+          <!-- Monthly HOA Input -->
+          <label for="hoa">Monthly HOA ($)</label>
+          <input type="text" id="hoa" required>
+
+          <!-- Property Tax Amount Input -->
+          <label for="propertyTax">Property Tax (per year, $)</label>
+          <input type="text" id="propertyTax" required>
+
+          <!-- Insurance Cost Input -->
+          <label for="insurance">Insurance Cost (per year, $)</label>
+          <input type="text" id="insurance" required>
+
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="submit" id="calculateBtn" style="flex: 1 1 0; height:44px; font-size:1.1rem; font-weight:600;">Calculate</button>
+          </div>
+          <div id="saveMessage" style="display:none; color:#22c55e; font-size:0.98rem; margin-top:0.5rem; text-align:center;">Saved!</div>
+        </form>
+
+        <!-- Results Section -->
+        <div class="results" id="results" style="display:none;">
+          <div class="result-row">
+            <span class="result-label">Monthly Mortgage:</span>
+            <span class="result-value" id="monthlyMortgage">$0.00</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Monthly HOA:</span>
+            <span class="result-value" id="monthlyHOA">$0.00</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Monthly Property Tax:</span>
+            <span class="result-value" id="monthlyTax">$0.00</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Monthly Insurance:</span>
+            <span class="result-value" id="monthlyInsurance">$0.00</span>
+          </div>
+          <hr style="margin: 0.7rem 0; border: none; border-top: 1px solid #d1d5db;">
+          <div class="result-row" style="font-size:1.1rem; font-weight:600;">
+            <span class="result-label">Total Monthly Payment:</span>
+            <span class="result-value" id="totalMonthly">$0.00</span>
+          </div>
+        </div>
+
+        <!-- Saved Calculations Section -->
+        <div id="savedSection" style="margin-top:2rem; max-width:1280px; margin-left:auto; margin-right:auto;">
+          <div style="display:flex; align-items:center; gap:1.2rem; margin-bottom:0.7rem;">
+            <h2 style="font-size:1.1rem; color:#2d3a4b; margin:0;">Saved Calculations</h2>
+            <button id="globalUndoBtn" style="margin-left:auto; background:#f3f4f6; color:#2563eb; border:1px solid #2563eb; border-radius:6px; padding:0.4rem 1.2rem; font-size:1rem; font-weight:600; cursor:not-allowed; opacity:0.6;" disabled>Undo Last Action</button>
+          </div>
+          <div id="savedList"></div>
+          <button id="compareBtn" style="margin-top:1rem; width:100%; background:#f3f4f6; color:#2563eb; border:1px solid #2563eb; border-radius:6px; padding:0.5rem; font-size:1rem; font-weight:600; cursor:pointer; display:none;">Compare Selected</button>
+          <div id="compareTableContainer" style="margin-top:1.5rem; min-width:1200px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inspection Checklist Tab -->
+    <div id="checklist" class="tab-content">
+      <div class="checklist-container">
+        <h2>Home Inspection Checklist</h2>
+        
+        <!-- Property Name Input -->
+        <div class="property-name-input">
+          <label for="inspectionPropertyName">Select Property</label>
+          <select id="inspectionPropertyName" onchange="loadInspectionForSelectedProperty()">
+            <option value="">-- Select a property --</option>
+          </select>
+          <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+            <em>Choose from your saved property calculations, or add a new property in the Calculator tab first.</em>
+          </div>
+        </div>
+        
+        <!-- Overall Progress -->
+        <div class="overall-progress">
+          <h2 id="overallTitle">Overall Progress: 0/36 complete (0%)</h2>
+          <div class="progress-bar">
+            <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Electrical -->
+        <div class="category">
+          <div class="category-header">
+            <h3>Electrical</h3>
+            <div class="category-progress" id="electricalProgress">Electrical: 0/6 complete (0%)</div>
+          </div>
+          <div class="category-items">
+            <div class="checklist-item" data-category="electrical" data-item="0">
+              <input type="checkbox" id="electrical-0">
+              <label for="electrical-0">All outlets functional</label>
+            </div>
+            <div class="checklist-item" data-category="electrical" data-item="1">
+              <input type="checkbox" id="electrical-1">
+              <label for="electrical-1">GFCI outlets in bathrooms/kitchen</label>
+            </div>
+            <div class="checklist-item" data-category="electrical" data-item="2">
+              <input type="checkbox" id="electrical-2">
+              <label for="electrical-2">Electrical panel labeled and accessible</label>
+            </div>
+            <div class="checklist-item" data-category="electrical" data-item="3">
+              <input type="checkbox" id="electrical-3">
+              <label for="electrical-3">Light switches work properly</label>
+            </div>
+            <div class="checklist-item" data-category="electrical" data-item="4">
+              <input type="checkbox" id="electrical-4">
+              <label for="electrical-4">Ceiling fans operate correctly</label>
+            </div>
+            <div class="checklist-item" data-category="electrical" data-item="5">
+              <input type="checkbox" id="electrical-5">
+              <label for="electrical-5">Smoke detectors installed and working</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plumbing -->
+        <div class="category">
+          <div class="category-header">
+            <h3>Plumbing</h3>
+            <div class="category-progress" id="plumbingProgress">Plumbing: 0/6 complete (0%)</div>
+          </div>
+          <div class="category-items">
+            <div class="checklist-item" data-category="plumbing" data-item="0">
+              <input type="checkbox" id="plumbing-0">
+              <label for="plumbing-0">Water pressure adequate throughout house</label>
+            </div>
+            <div class="checklist-item" data-category="plumbing" data-item="1">
+              <input type="checkbox" id="plumbing-1">
+              <label for="plumbing-1">No visible leaks under sinks</label>
+            </div>
+            <div class="checklist-item" data-category="plumbing" data-item="2">
+              <input type="checkbox" id="plumbing-2">
+              <label for="plumbing-2">Toilets flush and don't rock</label>
+            </div>
+            <div class="checklist-item" data-category="plumbing" data-item="3">
+              <input type="checkbox" id="plumbing-3">
+              <label for="plumbing-3">Hot water heater functional</label>
+            </div>
+            <div class="checklist-item" data-category="plumbing" data-item="4">
+              <input type="checkbox" id="plumbing-4">
+              <label for="plumbing-4">All drains clear properly</label>
+            </div>
+            <div class="checklist-item" data-category="plumbing" data-item="5">
+              <input type="checkbox" id="plumbing-5">
+              <label for="plumbing-5">Visible pipes in good condition</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- HVAC -->
+        <div class="category">
+          <div class="category-header">
+            <h3>HVAC</h3>
+            <div class="category-progress" id="hvacProgress">HVAC: 0/6 complete (0%)</div>
+          </div>
+          <div class="category-items">
+            <div class="checklist-item" data-category="hvac" data-item="0">
+              <input type="checkbox" id="hvac-0">
+              <label for="hvac-0">Heating system operates</label>
+            </div>
+            <div class="checklist-item" data-category="hvac" data-item="1">
+              <input type="checkbox" id="hvac-1">
+              <label for="hvac-1">Air conditioning cools effectively</label>
+            </div>
+            <div class="checklist-item" data-category="hvac" data-item="2">
+              <input type="checkbox" id="hvac-2">
+              <label for="hvac-2">Air filter clean/accessible</label>
+            </div>
+            <div class="checklist-item" data-category="hvac" data-item="3">
+              <input type="checkbox" id="hvac-3">
+              <label for="hvac-3">Ductwork visible and intact</label>
+            </div>
+            <div class="checklist-item" data-category="hvac" data-item="4">
+              <input type="checkbox" id="hvac-4">
+              <label for="hvac-4">Thermostat controls temperature</label>
+            </div>
+            <div class="checklist-item" data-category="hvac" data-item="5">
+              <input type="checkbox" id="hvac-5">
+              <label for="hvac-5">All vents open and unblocked</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Structural -->
+        <div class="category">
+          <div class="category-header">
+            <h3>Structural</h3>
+            <div class="category-progress" id="structuralProgress">Structural: 0/6 complete (0%)</div>
+          </div>
+          <div class="category-items">
+            <div class="checklist-item" data-category="structural" data-item="0">
+              <input type="checkbox" id="structural-0">
+              <label for="structural-0">Foundation solid with no major cracks</label>
+            </div>
+            <div class="checklist-item" data-category="structural" data-item="1">
+              <input type="checkbox" id="structural-1">
+              <label for="structural-1">Walls straight with no major damage</label>
+            </div>
+            <div class="checklist-item" data-category="structural" data-item="2">
+              <input type="checkbox" id="structural-2">
+              <label for="structural-2">Floors level and no soft spots</label>
+            </div>
+            <div class="checklist-item" data-category="structural" data-item="3">
+              <input type="checkbox" id="structural-3">
+              <label for="structural-3">Ceilings intact with no water stains</label>
+            </div>
+            <div class="checklist-item" data-category="structural" data-item="4">
+              <input type="checkbox" id="structural-4">
+              <label for="structural-4">Stairs secure with proper railings</label>
+            </div>
+            <div class="checklist-item" data-category="structural" data-item="5">
+              <input type="checkbox" id="structural-5">
+              <label for="structural-5">Windows open/close and seal properly</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interior -->
+        <div class="category">
+          <div class="category-header">
+            <h3>Interior</h3>
+            <div class="category-progress" id="interiorProgress">Interior: 0/6 complete (0%)</div>
+          </div>
+          <div class="category-items">
+            <div class="checklist-item" data-category="interior" data-item="0">
+              <input type="checkbox" id="interior-0">
+              <label for="interior-0">Paint in good condition</label>
+            </div>
+            <div class="checklist-item" data-category="interior" data-item="1">
+              <input type="checkbox" id="interior-1">
+              <label for="interior-1">Flooring intact throughout</label>
+            </div>
+            <div class="checklist-item" data-category="interior" data-item="2">
+              <input type="checkbox" id="interior-2">
+              <label for="interior-2">Kitchen cabinets functional</label>
+            </div>
+            <div class="checklist-item" data-category="interior" data-item="3">
+              <input type="checkbox" id="interior-3">
+              <label for="interior-3">Major appliances operational</label>
+            </div>
+            <div class="checklist-item" data-category="interior" data-item="4">
+              <input type="checkbox" id="interior-4">
+              <label for="interior-4">Adequate closet space</label>
+            </div>
+            <div class="checklist-item" data-category="interior" data-item="5">
+              <input type="checkbox" id="interior-5">
+              <label for="interior-5">Basement/attic accessible and dry</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exterior -->
+        <div class="category">
+          <div class="category-header">
+            <h3>Exterior</h3>
+            <div class="category-progress" id="exteriorProgress">Exterior: 0/6 complete (0%)</div>
+          </div>
+          <div class="category-items">
+            <div class="checklist-item" data-category="exterior" data-item="0">
+              <input type="checkbox" id="exterior-0">
+              <label for="exterior-0">Roof appears in good condition</label>
+            </div>
+            <div class="checklist-item" data-category="exterior" data-item="1">
+              <input type="checkbox" id="exterior-1">
+              <label for="exterior-1">Siding intact with no damage</label>
+            </div>
+            <div class="checklist-item" data-category="exterior" data-item="2">
+              <input type="checkbox" id="exterior-2">
+              <label for="exterior-2">Gutters clean and properly attached</label>
+            </div>
+            <div class="checklist-item" data-category="exterior" data-item="3">
+              <input type="checkbox" id="exterior-3">
+              <label for="exterior-3">Driveway/walkways in good repair</label>
+            </div>
+            <div class="checklist-item" data-category="exterior" data-item="4">
+              <input type="checkbox" id="exterior-4">
+              <label for="exterior-4">Landscaping well-maintained</label>
+            </div>
+            <div class="checklist-item" data-category="exterior" data-item="5">
+              <input type="checkbox" id="exterior-5">
+              <label for="exterior-5">Fencing secure if present</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checklist Actions -->
+        <div class="button-row">
+          <button class="btn-primary" onclick="saveInspection()">Save Inspection</button>
+          <button class="btn-secondary" onclick="resetChecklist()">Reset Checklist</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab Navigation
+    function showTab(tabName) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Remove active class from all tab buttons
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+      });
+      
+      // Show selected tab content
+      document.getElementById(tabName).classList.add('active');
+      
+      // Add active class to clicked button
+      event.target.classList.add('active');
+      
+      // Update dashboard if showing dashboard tab
+      if (tabName === 'dashboard') {
+        updateDashboard();
+      }
+      
+      // Refresh property dropdown when checklist tab is shown
+      if (tabName === 'checklist') {
+        populatePropertyDropdown();
+      }
+    }
+
+    // Calculator Functions
+    function formatCurrency(amount) {
+      return amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    }
+
+    function formatNumberWithCommas(value) {
+      value = value.replace(/[^\d]/g, '');
+      if (!value) return '';
+      const number = parseInt(value, 10);
+      if (isNaN(number)) return '';
+      return number.toLocaleString('en-US');
+    }
+
+    // Add formatting on blur, remove on focus for specified input fields
+    function addBlurFocusCommaFormatting(inputId) {
+      const input = document.getElementById(inputId);
+      input.addEventListener('focus', function() {
+        // Remove commas for editing
+        input.value = input.value.replace(/,/g, '');
+      });
+      input.addEventListener('blur', function() {
+        // Format with commas for display
+        input.value = formatNumberWithCommas(input.value);
+      });
+    }
+
+    // --- Save/Load/Delete Feature ---
+    function getFormValues() {
+      function getRaw(id) { return document.getElementById(id).value.replace(/,/g, ''); }
+      return {
+        name: document.getElementById('propertyName').value.trim(),
+        homePrice: getRaw('homePrice'),
+        downPayment: document.getElementById('downPayment').value,
+        interestRate: document.getElementById('interestRate').value,
+        hoa: getRaw('hoa'),
+        propertyTax: getRaw('propertyTax'),
+        insurance: getRaw('insurance'),
+      };
+    }
+
+    function getResults() {
+      return {
+        monthlyMortgage: document.getElementById('monthlyMortgage').textContent,
+        monthlyHOA: document.getElementById('monthlyHOA').textContent,
+        monthlyTax: document.getElementById('monthlyTax').textContent,
+        monthlyInsurance: document.getElementById('monthlyInsurance').textContent,
+        totalMonthly: document.getElementById('totalMonthly').textContent,
+      };
+    }
+
+    function getSavedCalculations() {
+      const data = localStorage.getItem('savedCalculations');
+      return data ? JSON.parse(data) : [];
+    }
+
+    function setSavedCalculations(arr) {
+      localStorage.setItem('savedCalculations', JSON.stringify(arr));
+    }
+
+    // --- Edit Property Name Functionality ---
+    // editingIndex is declared as a global variable outside any function
+    let editingIndex = null;
+    // Undo functionality
+    let pendingDelete = null;
+    let undoTimeout = null;
+
+    function renderSavedCalculations() {
+      const savedList = document.getElementById('savedList');
+      const compareBtn = document.getElementById('compareBtn');
+      const arr = getSavedCalculations();
+      if (!arr.length) {
+        savedList.innerHTML = '<div style="color:#888; font-size:0.98rem;">No saved calculations</div>';
+        compareBtn.style.display = 'none';
+        return;
+      }
+      savedList.innerHTML = '';
+      arr.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.style.border = '1px solid #e5e7eb';
+        card.style.borderRadius = '8px';
+        card.style.background = '#f9fafb';
+        card.style.padding = '1rem';
+        card.style.marginBottom = '1rem';
+        card.style.fontSize = '0.98rem';
+        card.style.position = 'relative';
+        card.style.display = 'flex';
+        card.style.flexDirection = 'column';
+
+        // Top row: Checkbox, Name (view/edit), modify, delete
+        const topRow = document.createElement('div');
+        topRow.style.display = 'flex';
+        topRow.style.alignItems = 'center';
+        topRow.style.justifyContent = 'space-between';
+
+        // Checkbox
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.style.marginRight = '0.7rem';
+        checkbox.setAttribute('data-compare', idx);
+
+        // Name cell (view/edit)
+        let nameCell = document.createElement('span');
+        nameCell.style.display = 'flex';
+        nameCell.style.alignItems = 'center';
+        if (editingIndex === idx) {
+          // Edit mode: mini-form for all fields
+          nameCell.style.flexDirection = 'column';
+          nameCell.style.width = '100%';
+          nameCell.style.maxWidth = '700px';
+          nameCell.style.background = '#f3f4f6';
+          nameCell.style.padding = '1rem';
+          nameCell.style.borderRadius = '6px';
+          nameCell.style.marginBottom = '0.5rem';
+          nameCell.setAttribute('data-property-edit', idx);
+
+          // Create mini-form fields
+          const fields = [
+            { label: 'Property Name', key: 'name', type: 'text', value: item.name, formatCommas: false },
+            { label: 'Home Price ($)', key: 'homePrice', type: 'text', value: formatNumberWithCommas(item.homePrice), formatCommas: true },
+            { label: 'Down Payment (%)', key: 'downPayment', type: 'number', value: item.downPayment, formatCommas: false },
+            { label: 'Interest Rate (%)', key: 'interestRate', type: 'number', value: item.interestRate, formatCommas: false },
+            { label: 'Monthly HOA ($)', key: 'hoa', type: 'text', value: formatNumberWithCommas(item.hoa), formatCommas: true },
+            { label: 'Property Tax (per year, $)', key: 'propertyTax', type: 'text', value: formatNumberWithCommas(item.propertyTax), formatCommas: true },
+            { label: 'Insurance Cost (per year, $)', key: 'insurance', type: 'text', value: formatNumberWithCommas(item.insurance), formatCommas: true }
+          ];
+          const fieldInputs = {};
+          fields.forEach(f => {
+            const row = document.createElement('div');
+            row.style.display = 'flex';
+            row.style.alignItems = 'center';
+            row.style.marginBottom = '0.5rem';
+            row.style.gap = '0.7rem';
+            const label = document.createElement('label');
+            label.textContent = f.label;
+            label.style.width = '180px';
+            label.style.fontWeight = '500';
+            label.style.fontSize = '0.98rem';
+            const input = document.createElement('input');
+            input.type = f.type;
+            input.value = f.value;
+            input.name = f.key;
+            input.style.width = '220px';
+            input.style.padding = '0.4rem';
+            input.style.border = '1px solid #d1d5db';
+            input.style.borderRadius = '6px';
+            input.style.fontSize = '1rem';
+            input.style.boxSizing = 'border-box';
+            if (f.type === 'text' && f.formatCommas) {
+              input.addEventListener('focus', function() { input.value = input.value.replace(/,/g, ''); });
+              input.addEventListener('blur', function() { input.value = formatNumberWithCommas(input.value); });
+            }
+            fieldInputs[f.key] = input;
+            row.appendChild(label);
+            row.appendChild(input);
+            nameCell.appendChild(row);
+          });
+
+          // Button row
+          const buttonRow = document.createElement('div');
+          buttonRow.style.display = 'flex';
+          buttonRow.style.gap = '0.7rem';
+          buttonRow.style.marginTop = '0.5rem';
+
+          // Save button
+          const saveBtn = document.createElement('button');
+          saveBtn.textContent = 'Save';
+          saveBtn.style.background = '#22c55e';
+          saveBtn.style.color = '#fff';
+          saveBtn.style.border = 'none';
+          saveBtn.style.borderRadius = '4px';
+          saveBtn.style.width = '80px';
+          saveBtn.style.height = '32px';
+          saveBtn.style.fontSize = '1rem';
+          saveBtn.style.cursor = 'pointer';
+          saveBtn.style.textAlign = 'center';
+          saveBtn.style.display = 'flex';
+          saveBtn.style.alignItems = 'center';
+          saveBtn.style.justifyContent = 'center';
+          saveBtn.setAttribute('data-edit-save', idx);
+
+          // Cancel button
+          const cancelBtn = document.createElement('button');
+          cancelBtn.textContent = 'Cancel';
+          cancelBtn.style.background = '#e5e7eb';
+          cancelBtn.style.color = '#222';
+          cancelBtn.style.border = '1px solid #d1d5db';
+          cancelBtn.style.borderRadius = '4px';
+          cancelBtn.style.width = '80px';
+          cancelBtn.style.height = '32px';
+          cancelBtn.style.fontSize = '1rem';
+          cancelBtn.style.cursor = 'pointer';
+          cancelBtn.style.textAlign = 'center';
+          cancelBtn.style.display = 'flex';
+          cancelBtn.style.alignItems = 'center';
+          cancelBtn.style.justifyContent = 'center';
+          cancelBtn.setAttribute('data-edit-cancel', idx);
+
+          buttonRow.appendChild(saveBtn);
+          buttonRow.appendChild(cancelBtn);
+          nameCell.appendChild(buttonRow);
+
+          // Keyboard events for Save/Cancel
+          Object.values(fieldInputs).forEach(input => {
+            input.addEventListener('keydown', function(e) {
+              if (e.key === 'Enter') saveBtn.click();
+              if (e.key === 'Escape') cancelBtn.click();
+            });
+          });
+          setTimeout(() => fieldInputs.name.focus(), 0);
+        } else {
+          // View mode
+          nameCell.textContent = item.name;
+          nameCell.style.color = '#2563eb';
+          nameCell.style.cursor = 'pointer';
+          nameCell.style.textDecoration = 'underline';
+          nameCell.setAttribute('data-edit', idx);
+          // Add edit button
+          const editBtn = document.createElement('span');
+          editBtn.textContent = 'edit';
+          editBtn.style.color = '#2563eb';
+          editBtn.style.textDecoration = 'underline';
+          editBtn.style.cursor = 'pointer';
+          editBtn.style.fontSize = '0.97rem';
+          editBtn.style.marginLeft = '0.7rem';
+          editBtn.setAttribute('data-edit-btn', idx);
+          nameCell.appendChild(editBtn);
+        }
+
+        // Delete link
+        const deleteLink = document.createElement('span');
+        deleteLink.textContent = 'delete';
+        deleteLink.style.color = '#888';
+        deleteLink.style.textDecoration = 'underline';
+        deleteLink.style.cursor = 'pointer';
+        deleteLink.style.fontSize = '0.97rem';
+        deleteLink.style.marginLeft = '0.7rem';
+        deleteLink.setAttribute('data-delete', idx);
+
+        // Top row layout
+        const left = document.createElement('div');
+        left.style.display = 'flex';
+        left.style.alignItems = 'center';
+        left.appendChild(checkbox);
+        left.appendChild(nameCell);
+        left.appendChild(deleteLink);
+        topRow.appendChild(left);
+
+        // Details row
+        const details = document.createElement('div');
+        details.style.fontSize = '0.93rem';
+        details.style.color = '#444';
+        details.style.marginTop = '0.5rem';
+        details.innerHTML = `
+          <div>Home Price: <b>${item.homePriceFormatted}</b> | Down Payment: <b>${item.downPayment}%</b> | Interest Rate: <b>${item.interestRate}%</b></div>
+          <div>Monthly HOA: <b>${formatCurrency(Number(item.hoa))}</b> | Property Tax: <b>${formatCurrency(Number(item.propertyTax))}/year</b> | Insurance: <b>${formatCurrency(Number(item.insurance))}/year</b></div>
+          <div style="margin-top:0.3rem;">Total Monthly Payment: <b style="font-size:1.08rem; color:#2563eb;">${item.totalMonthly}</b></div>
+        `;
+
+        card.appendChild(topRow);
+        card.appendChild(details);
+        savedList.appendChild(card);
+      });
+
+      // Show/hide compare button
+      const anyChecked = !!savedList.querySelector('input[type="checkbox"]:checked');
+      compareBtn.style.display = arr.length ? 'block' : 'none';
+      compareBtn.disabled = !anyChecked;
+      
+      // Update property dropdown in checklist tab
+      populatePropertyDropdown();
+    }
+
+    // For compatibility with existing dashboard functions
+    function getSavedProperties() {
+      return getSavedCalculations();
+    }
+
+    function renderSavedProperties() {
+      renderSavedCalculations();
+    }
+
+    function deleteProperty(index) {
+      const arr = getSavedCalculations();
+      const deletedItem = arr[index];
+      arr.splice(index, 1);
+      setSavedCalculations(arr);
+      lastAction = { type: 'delete', property: deletedItem, index: index };
+      updateGlobalUndoBtn();
+      renderSavedCalculations();
+      updateDashboard();
+    }
+
+    // Checkbox/compare logic
+    document.getElementById('savedList').addEventListener('change', function() {
+      const compareBtn = document.getElementById('compareBtn');
+      const savedList = document.getElementById('savedList');
+      const anyChecked = !!savedList.querySelector('input[type="checkbox"]:checked');
+      compareBtn.disabled = !anyChecked;
+    });
+
+    document.getElementById('savedList').addEventListener('click', function(e) {
+      // Edit button for property
+      if (e.target.hasAttribute('data-edit-btn')) {
+        editingIndex = +e.target.getAttribute('data-edit-btn');
+        renderSavedCalculations();
+        return;
+      }
+      // Save property (mini-form)
+      if (e.target.hasAttribute('data-edit-save')) {
+        console.log('Save button clicked');
+        const idx = +e.target.getAttribute('data-edit-save');
+        console.log('Editing index:', idx);
+        
+        // Find the container that holds ALL the edit inputs for this property
+        const propertyContainer = e.target.closest('[data-property-edit]') || 
+                                 e.target.closest('.property-edit') || 
+                                 e.target.parentElement.parentElement; // Go up to the property container
+        
+        console.log('Property container found:', propertyContainer);
+        
+        const inputs = propertyContainer.querySelectorAll('input');
+        console.log('Number of inputs found:', inputs.length);
+        
+        // Log each input found
+        inputs.forEach((input, i) => {
+          console.log(`Input ${i}: name="${input.name}", value="${input.value}"`);
+        });
+        
+        // === EDIT SAVE DEBUGGING ===
+        console.log('=== EDIT SAVE DEBUGGING ===');
+        const arr = getSavedCalculations();
+        console.log('Original property data:', arr[idx]);
+
+        // Log each input field value
+        console.log('Home Price input:', propertyContainer.querySelector('input[name="homePrice"]')?.value || 'NOT FOUND');
+        console.log('Down Payment input:', propertyContainer.querySelector('input[name="downPayment"]')?.value || 'NOT FOUND');
+        console.log('Interest Rate input:', propertyContainer.querySelector('input[name="interestRate"]')?.value || 'NOT FOUND');
+        console.log('HOA input:', propertyContainer.querySelector('input[name="hoa"]')?.value || 'NOT FOUND');
+        console.log('Property Tax input:', propertyContainer.querySelector('input[name="propertyTax"]')?.value || 'NOT FOUND');
+        console.log('Insurance input:', propertyContainer.querySelector('input[name="insurance"]')?.value || 'NOT FOUND');
+
+        // Debug: print all input names and values before saving
+        const values = {};
+        inputs.forEach(input => {
+          let val = input.value;
+          const k = input.name;
+          // Only remove commas from numeric fields, not the property name
+          if(['homePrice','hoa','propertyTax','insurance'].includes(k)) {
+            val = val.replace(/,/g,'');
+          }
+          // Ensure property name is always a string
+          if(k === 'name') {
+            val = String(val).trim();
+          }
+          values[k] = val;
+        });
+        const prevProperty = { ...arr[idx] };
+        const updatedProperty = {
+          ...arr[idx],
+          ...values,
+          name: String(values.name), // force string
+          homePriceFormatted: '$' + formatNumberWithCommas(values.homePrice),
+        };
+        console.log('Updated property data:', updatedProperty);
+        arr[idx] = updatedProperty;
+        // Recalculate results
+        const homePrice = parseFloat(values.homePrice);
+        const downPaymentPercent = parseFloat(values.downPayment);
+        const interestRate = parseFloat(values.interestRate);
+        const hoa = parseFloat(values.hoa);
+        const propertyTaxAnnual = parseFloat(values.propertyTax);
+        const insurancePerYear = parseFloat(values.insurance);
+        const downPayment = homePrice * (downPaymentPercent / 100);
+        const loanAmount = homePrice - downPayment;
+        const monthlyInterestRate = (interestRate / 100) / 12;
+        const totalPayments = 30 * 12;
+        let monthlyMortgage = 0;
+        if (monthlyInterestRate > 0) {
+          monthlyMortgage = loanAmount * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalPayments)) /
+            (Math.pow(1 + monthlyInterestRate, totalPayments) - 1);
+        } else {
+          monthlyMortgage = loanAmount / totalPayments;
+        }
+        const monthlyTax = propertyTaxAnnual / 12;
+        const monthlyInsurance = insurancePerYear / 12;
+        const monthlyHOA = hoa;
+        const totalMonthly = monthlyMortgage + monthlyTax + monthlyInsurance + monthlyHOA;
+        arr[idx].monthlyMortgage = formatCurrency(monthlyMortgage);
+        arr[idx].monthlyHOA = formatCurrency(monthlyHOA);
+        arr[idx].monthlyTax = formatCurrency(monthlyTax);
+        arr[idx].monthlyInsurance = formatCurrency(monthlyInsurance);
+        arr[idx].totalMonthly = formatCurrency(totalMonthly);
+        // Save to localStorage and debug
+        setSavedCalculations(arr);
+        const savedCalculations = getSavedCalculations();
+        console.log('Saved calculations after update:', savedCalculations);
+        if (savedCalculations[idx] && savedCalculations[idx].name === values.name) {
+          console.log('Name save succeeded:', savedCalculations[idx].name);
+        } else {
+          console.log('Name save failed:', savedCalculations[idx]?.name, 'expected:', values.name);
+        }
+        lastAction = { type: 'edit', property: { ...arr[idx] }, index: idx, prevProperty };
+        updateGlobalUndoBtn();
+        editingIndex = null;
+        renderSavedCalculations();
+        return;
+      }
+      // Cancel property edit
+      if (e.target.hasAttribute('data-edit-cancel')) {
+        editingIndex = null;
+        renderSavedCalculations();
+        return;
+      }
+      // Delete functionality with confirmation and undo
+      if (e.target.hasAttribute('data-delete')) {
+        // Track last action for global undo
+        const idx = +e.target.getAttribute('data-delete');
+        const arr = getSavedCalculations();
+        const deletedItem = arr[idx];
+
+        // Custom confirmation dialog
+        const confirmDialog = document.createElement('div');
+        confirmDialog.style.position = 'fixed';
+        confirmDialog.style.top = '50%';
+        confirmDialog.style.left = '50%';
+        confirmDialog.style.transform = 'translate(-50%, -50%)';
+        confirmDialog.style.background = '#fff';
+        confirmDialog.style.border = '1.5px solid #d1d5db';
+        confirmDialog.style.borderRadius = '8px';
+        confirmDialog.style.padding = '2rem 2.5rem 1.5rem 2.5rem';
+        confirmDialog.style.fontSize = '1.08rem';
+        confirmDialog.style.zIndex = '2000';
+        confirmDialog.style.boxShadow = '0 4px 24px rgba(0,0,0,0.13)';
+        confirmDialog.style.textAlign = 'center';
+
+        const msg = document.createElement('div');
+        msg.textContent = `Are you sure you want to delete "${deletedItem.name}"?`;
+        msg.style.marginBottom = '1.2rem';
+
+        const btnRow = document.createElement('div');
+        btnRow.style.display = 'flex';
+        btnRow.style.justifyContent = 'center';
+        btnRow.style.gap = '1.2rem';
+
+        const yesBtn = document.createElement('button');
+        yesBtn.textContent = 'Yes';
+        yesBtn.style.background = '#ef4444';
+        yesBtn.style.color = '#fff';
+        yesBtn.style.border = 'none';
+        yesBtn.style.borderRadius = '4px';
+        yesBtn.style.padding = '0.5rem 1.5rem';
+        yesBtn.style.fontSize = '1.05rem';
+        yesBtn.style.cursor = 'pointer';
+
+        const noBtn = document.createElement('button');
+        noBtn.textContent = 'No';
+        noBtn.style.background = '#f3f4f6';
+        noBtn.style.color = '#222';
+        noBtn.style.border = '1px solid #d1d5db';
+        noBtn.style.borderRadius = '4px';
+        noBtn.style.padding = '0.5rem 1.5rem';
+        noBtn.style.fontSize = '1.05rem';
+        noBtn.style.cursor = 'pointer';
+
+        btnRow.appendChild(yesBtn);
+        btnRow.appendChild(noBtn);
+        confirmDialog.appendChild(msg);
+        confirmDialog.appendChild(btnRow);
+        document.body.appendChild(confirmDialog);
+
+        // No button: just close dialog
+        noBtn.addEventListener('click', function() {
+          document.body.removeChild(confirmDialog);
+        });
+
+        // Yes button: proceed with delete and undo
+        yesBtn.addEventListener('click', function() {
+          document.body.removeChild(confirmDialog);
+
+          // Clear any existing undo timeout
+          if (undoTimeout) {
+            clearTimeout(undoTimeout);
+            undoTimeout = null;
+          }
+
+          // Store pending delete
+          pendingDelete = { item: deletedItem, index: idx };
+
+          // Track for global undo
+          lastAction = { type: 'delete', property: deletedItem, index: idx };
+          console.log('=== DELETE DEBUGGING ===');
+          console.log('Setting lastAction for delete:', lastAction);
+          updateGlobalUndoBtn();
+
+          // Remove from display immediately
+          arr.splice(idx, 1);
+          setSavedCalculations(arr);
+          renderSavedCalculations();
+
+          // Show undo message with proper flexbox layout
+          const undoMessage = document.createElement('div');
+          undoMessage.id = 'undoMessage';
+          undoMessage.style.position = 'fixed';
+          undoMessage.style.top = '50%';
+          undoMessage.style.left = '50%';
+          undoMessage.style.transform = 'translate(-50%, -50%)';
+          undoMessage.style.display = 'flex';
+          undoMessage.style.justifyContent = 'space-between';
+          undoMessage.style.alignItems = 'center';
+          undoMessage.style.width = '100%';
+          undoMessage.style.maxWidth = '500px';
+          undoMessage.style.padding = '12px 16px';
+          undoMessage.style.background = '#f3f4f6';
+          undoMessage.style.border = '1px solid #d1d5db';
+          undoMessage.style.borderRadius = '6px';
+          undoMessage.style.fontSize = '1.08rem';
+          undoMessage.style.zIndex = '2000';
+          undoMessage.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+
+          // Undo content container (text + undo button)
+          const undoContent = document.createElement('div');
+          undoContent.style.display = 'flex';
+          undoContent.style.alignItems = 'center';
+          undoContent.style.gap = '12px';
+
+          // Text message
+          const msgSpan = document.createElement('span');
+          msgSpan.textContent = `Property "${deletedItem.name}" deleted.`;
+
+          // Undo button
+          const undoBtn = document.createElement('button');
+          undoBtn.textContent = 'Undo';
+          undoBtn.style.background = '#2563eb';
+          undoBtn.style.color = '#fff';
+          undoBtn.style.border = 'none';
+          undoBtn.style.borderRadius = '4px';
+          undoBtn.style.padding = '0.4rem 1.2rem';
+          undoBtn.style.cursor = 'pointer';
+          undoBtn.style.fontSize = '1.05rem';
+
+          // Close (X) button
+          const closeBtn = document.createElement('span');
+          closeBtn.textContent = '×';
+          closeBtn.style.marginLeft = 'auto';
+          closeBtn.style.cursor = 'pointer';
+          closeBtn.style.color = '#6b7280';
+          closeBtn.style.fontSize = '1.5rem';
+          closeBtn.style.fontWeight = 'bold';
+          closeBtn.setAttribute('aria-label', 'Close');
+
+          // Assemble the layout
+          undoContent.appendChild(msgSpan);
+          undoContent.appendChild(undoBtn);
+          undoMessage.appendChild(undoContent);
+          undoMessage.appendChild(closeBtn);
+          document.body.appendChild(undoMessage);
+
+          // Undo button functionality
+          undoBtn.addEventListener('click', function() {
+            // Restore the item
+            const currentArr = getSavedCalculations();
+            currentArr.splice(pendingDelete.index, 0, pendingDelete.item);
+            setSavedCalculations(currentArr);
+            renderSavedCalculations();
+
+            // Clear pending delete and global undo
+            pendingDelete = null;
+            lastAction = null;
+            updateGlobalUndoBtn();
+            // Remove undo message
+            document.body.removeChild(undoMessage);
+          });
+
+          // Close button functionality
+          closeBtn.addEventListener('click', function() {
+            pendingDelete = null;
+            // Keep lastAction for global undo - don't clear it here
+            document.body.removeChild(undoMessage);
+          });
+
+          // Auto-remove after 10 seconds
+          undoTimeout = setTimeout(function() {
+            if (document.body.contains(undoMessage)) {
+              document.body.removeChild(undoMessage);
+            }
+            pendingDelete = null;
+            // Keep lastAction for global undo - don't clear it here
+            undoTimeout = null;
+          }, 10000);
+        });
+
+        return;
+      }
+    });
+
+    document.getElementById('compareBtn').addEventListener('click', function() {
+      const savedList = document.getElementById('savedList');
+      const arr = getSavedCalculations();
+      const checked = Array.from(savedList.querySelectorAll('input[type="checkbox"]:checked'));
+      if (!checked.length) return;
+      const indices = checked.map(cb => +cb.getAttribute('data-compare'));
+      const compareArr = indices.map(i => arr[i]);
+      // Build comparison table with sortable columns
+      const columns = [
+        { key: 'name', label: 'Property Name', sortable: false },
+        { key: 'homePrice', label: 'Home Price', sortable: true },
+        { key: 'downPayment', label: 'Down Payment', sortable: true },
+        { key: 'interestRate', label: 'Interest Rate', sortable: true },
+        { key: 'hoa', label: 'Monthly HOA', sortable: true },
+        { key: 'propertyTax', label: 'Property Tax (year)', sortable: true },
+        { key: 'insurance', label: 'Insurance (year)', sortable: true },
+        { key: 'totalMonthly', label: 'Total Monthly', sortable: true }
+      ];
+      let sortCol = window._compareSortCol || null;
+      let sortDir = window._compareSortDir || 1;
+      function renderTableBody(data) {
+        return data.map(item => {
+          return `<tr>
+            <td style="border:1.5px solid #e5e7eb; padding:0.5rem; ${colStyles.name||''}">${item.name}</td>
+            <td style="border:1.5px solid #e5e7eb; padding:0.5rem; ${colStyles.homePrice||''}">${formatCurrency(Number(item.homePrice))}</td>
+            <td style="border:1.5px solid #e5e7eb; padding:0.5rem; ${colStyles.downPayment||''}">${item.downPayment}%</td>
+            <td style="border:1.5px solid #e5e7eb; padding:0.5rem; ${colStyles.interestRate||''}">${item.interestRate}%</td>
+            <td style="border:1.5px solid #e5e7eb; padding:0.5rem; ${colStyles.hoa||''}">${formatCurrency(Number(item.hoa))}</td>
+            <td style="border:1.5px solid #e5e7eb; padding:0.5rem; ${colStyles.propertyTax||''}">${formatCurrency(Number(item.propertyTax))}/year</td>
+            <td style="border:1.5px solid #e5e7eb; padding:0.5rem; ${colStyles.insurance||''}">${formatCurrency(Number(item.insurance))}/year</td>
+            <td style="border:1.5px solid #e5e7eb; padding:0.5rem; ${colStyles.totalMonthly||''} font-weight:600; color:#2563eb;">${item.totalMonthly}</td>
+          </tr>`;
+        }).join('');
+      }
+      function getSortIcon(col) {
+        if (!col.sortable) return '';
+        if (sortCol !== col.key) return '<span style="font-size:0.9em; color:#bbb;">▲▼</span>';
+        return sortDir === 1
+          ? '<span style="font-size:0.9em; color:#2563eb;">▲</span>'
+          : '<span style="font-size:0.9em; color:#2563eb;">▼</span>';
+      }
+      let html = '<div style="overflow-x:auto; background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.03); max-width:1240px; margin:auto;">';
+      html += '<table style="width:1200px; border-collapse:collapse; table-layout:fixed;">';
+      html += '<tr style="background:#f3f4f6; font-weight:600;">';
+      const colStyles = {
+        name: 'min-width:180px; max-width:220px;',
+        homePrice: 'min-width:120px; max-width:140px; text-align:right;',
+        downPayment: 'min-width:90px; max-width:100px; text-align:right;',
+        interestRate: 'min-width:110px; max-width:120px; text-align:right;',
+        hoa: 'min-width:120px; max-width:130px; text-align:right;',
+        propertyTax: 'min-width:140px; max-width:150px; text-align:right;',
+        insurance: 'min-width:120px; max-width:130px; text-align:right;',
+        totalMonthly: 'min-width:150px; max-width:170px; text-align:right;'
+      };
+      columns.forEach(col => {
+        html += `<td style="border:1.5px solid #e5e7eb; padding:0.5rem; ${colStyles[col.key]||''} cursor:${col.sortable ? 'pointer' : 'default'}; user-select:none; font-size:1.05rem; background:#f3f4f6;" data-sortcol="${col.key}">${col.label} ${getSortIcon(col)}</td>`;
+      });
+      html += '</tr>';
+      // Sort if needed
+      let sortedArr = compareArr.slice();
+      if (sortCol) {
+        sortedArr.sort((a, b) => {
+          let va = a[sortCol], vb = b[sortCol];
+          if (sortCol === 'totalMonthly') {
+            va = Number((a.totalMonthly||'').replace(/[^\d.]/g, ''));
+            vb = Number((b.totalMonthly||'').replace(/[^\d.]/g, ''));
+          } else if (['homePrice','hoa','propertyTax','insurance'].includes(sortCol)) {
+            va = Number(a[sortCol]);
+            vb = Number(b[sortCol]);
+          } else if (['downPayment','interestRate'].includes(sortCol)) {
+            va = Number(a[sortCol]);
+            vb = Number(b[sortCol]);
+          }
+          if (va < vb) return -1 * sortDir;
+          if (va > vb) return 1 * sortDir;
+          return 0;
+        });
+      }
+      html += renderTableBody(sortedArr);
+      html += '</table></div>';
+      document.getElementById('compareTableContainer').innerHTML = html;
+      // Add click handlers for sorting
+      Array.from(document.querySelectorAll('[data-sortcol]')).forEach(td => {
+        const col = td.getAttribute('data-sortcol');
+        const colObj = columns.find(c => c.key === col);
+        if (!colObj || !colObj.sortable) return;
+        td.style.position = 'relative';
+        td.addEventListener('click', function() {
+          if (sortCol === col) {
+            sortDir = -sortDir;
+          } else {
+            sortCol = col;
+            sortDir = 1;
+          }
+          window._compareSortCol = sortCol;
+          window._compareSortDir = sortDir;
+          document.getElementById('compareBtn').click();
+        });
+      });
+    });
+
+    // --- Global Undo State ---
+    let lastAction = null; // { type: 'add'|'edit'|'delete', property: {...}, index: number, prevProperty: {...} }
+
+    function updateGlobalUndoBtn() {
+      const btn = document.getElementById('globalUndoBtn');
+      console.log('=== UPDATE GLOBAL UNDO BTN ===');
+      console.log('lastAction:', lastAction);
+      if (!lastAction) {
+        btn.disabled = true;
+        btn.style.cursor = 'not-allowed';
+        btn.style.opacity = '0.6';
+        btn.textContent = 'Undo Last Action';
+        console.log('Button disabled, no lastAction');
+        return;
+      }
+      btn.disabled = false;
+      btn.style.cursor = 'pointer';
+      btn.style.opacity = '1';
+      if (lastAction.type === 'add') btn.textContent = `Undo: Added ${lastAction.property.name}`;
+      else if (lastAction.type === 'edit') btn.textContent = `Undo: Edited ${lastAction.property.name}`;
+      else if (lastAction.type === 'delete') btn.textContent = `Undo: Deleted ${lastAction.property.name}`;
+      console.log('Button enabled, text:', btn.textContent);
+    }
+
+    document.getElementById('globalUndoBtn').addEventListener('click', function() {
+      console.log('=== GLOBAL UNDO DEBUGGING ===');
+      console.log('Global undo clicked, lastAction:', lastAction);
+      if (!lastAction) {
+        console.log('No lastAction, returning');
+        return;
+      }
+      let arr = getSavedCalculations();
+      console.log('Current saved calculations:', arr);
+      if (lastAction.type === 'add') {
+        // Remove the last added property
+        arr.splice(lastAction.index, 1);
+        console.log('Undoing add, removed item at index:', lastAction.index);
+      } else if (lastAction.type === 'delete') {
+        // Restore the deleted property at its original index
+        arr.splice(lastAction.index, 0, lastAction.property);
+        console.log('Undoing delete, restored item at index:', lastAction.index, 'property:', lastAction.property);
+      } else if (lastAction.type === 'edit') {
+        // Restore the previous property state
+        arr[lastAction.index] = lastAction.prevProperty;
+        console.log('Undoing edit, restored previous state at index:', lastAction.index);
+      }
+      setSavedCalculations(arr);
+      renderSavedCalculations();
+      lastAction = null;
+      updateGlobalUndoBtn();
+      console.log('Global undo completed');
+    });
+
+    // Checklist Functions - Using working code from original inspection checklist
+    const categories = ['electrical', 'plumbing', 'hvac', 'structural', 'interior', 'exterior'];
+    const itemsPerCategory = 6;
+    const totalItems = categories.length * itemsPerCategory;
+
+    // Load saved progress from localStorage
+    function loadProgress() {
+      const propertyName = document.getElementById('inspectionPropertyName').value;
+      if (!propertyName) {
+        // Return empty progress if no property selected
+        const progress = {};
+        categories.forEach(category => {
+          progress[category] = new Array(itemsPerCategory).fill(false);
+        });
+        return progress;
+      }
+      
+      const saved = localStorage.getItem('propertyInspections');
+      console.log('=== LOAD PROGRESS DEBUG ===');
+      console.log('Property name:', propertyName);
+      console.log('Raw localStorage data:', saved);
+      if (saved) {
+        const inspections = JSON.parse(saved);
+        const progress = inspections[propertyName];
+        console.log('Parsed progress for property:', progress);
+        if (progress) {
+          return progress;
+        }
+      }
+      // Initialize with all items unchecked
+      const progress = {};
+      categories.forEach(category => {
+        progress[category] = new Array(itemsPerCategory).fill(false);
+      });
+      console.log('Initialized new progress:', progress);
+      return progress;
+    }
+
+    // Save progress to localStorage
+    function saveProgress(progress) {
+      const propertyName = document.getElementById('inspectionPropertyName').value;
+      if (!propertyName) {
+        console.log('No property selected, cannot save progress');
+        return;
+      }
+      
+      console.log('=== SAVE PROGRESS DEBUG ===');
+      console.log('Property name:', propertyName);
+      console.log('Saving progress:', progress);
+      
+      const saved = localStorage.getItem('propertyInspections');
+      const inspections = saved ? JSON.parse(saved) : {};
+      inspections[propertyName] = progress;
+      localStorage.setItem('propertyInspections', JSON.stringify(inspections));
+      console.log('Progress saved to localStorage');
+    }
+
+    // Update progress display
+    function updateProgress() {
+      console.log('=== UPDATE PROGRESS DEBUG ===');
+      const progress = loadProgress();
+      console.log('Current progress:', progress);
+      
+      // Update each category progress
+      categories.forEach(category => {
+        const completed = progress[category].filter(Boolean).length;
+        const percentage = Math.round((completed / itemsPerCategory) * 100);
+        const progressElement = document.getElementById(`${category}Progress`);
+        progressElement.textContent = `${category.charAt(0).toUpperCase() + category.slice(1)}: ${completed}/${itemsPerCategory} complete (${percentage}%)`;
+        console.log(`${category}: ${completed}/${itemsPerCategory} (${percentage}%)`);
+      });
+
+      // Update overall progress
+      const totalCompleted = categories.reduce((sum, category) => {
+        return sum + progress[category].filter(Boolean).length;
+      }, 0);
+      const overallPercentage = Math.round((totalCompleted / totalItems) * 100);
+      
+      console.log(`Overall: ${totalCompleted}/${totalItems} (${overallPercentage}%)`);
+      
+      document.getElementById('overallTitle').textContent = `Overall Progress: ${totalCompleted}/${totalItems} complete (${overallPercentage}%)`;
+      
+      // Update progress bar
+      const progressBar = document.getElementById('overallProgress');
+      progressBar.style.width = `${overallPercentage}%`;
+      
+      // Update progress bar color
+      progressBar.className = 'progress-fill';
+      if (overallPercentage <= 33) {
+        progressBar.classList.add('red');
+      } else if (overallPercentage <= 66) {
+        progressBar.classList.add('yellow');
+      } else {
+        progressBar.classList.add('green');
+      }
+    }
+
+    // Toggle item completion
+    function toggleItem(category, itemIndex) {
+      console.log('=== TOGGLE ITEM DEBUG ===');
+      console.log('Toggling:', category, 'item:', itemIndex);
+      
+      const progress = loadProgress();
+      console.log('Current progress for this item:', progress[category][itemIndex]);
+      
+      progress[category][itemIndex] = !progress[category][itemIndex];
+      console.log('New progress for this item:', progress[category][itemIndex]);
+      
+      saveProgress(progress);
+      updateProgress();
+      
+      // Update visual state
+      const itemElement = document.querySelector(`[data-category="${category}"][data-item="${itemIndex}"]`);
+      const checkbox = itemElement.querySelector('input[type="checkbox"]');
+      
+      console.log('Checkbox checked state:', checkbox.checked);
+      console.log('Progress state:', progress[category][itemIndex]);
+      
+      if (progress[category][itemIndex]) {
+        itemElement.classList.add('completed');
+        console.log('Added completed class');
+      } else {
+        itemElement.classList.remove('completed');
+        console.log('Removed completed class');
+      }
+      
+      // Double-check that checkbox state matches progress state
+      if (checkbox.checked !== progress[category][itemIndex]) {
+        console.log('WARNING: Checkbox state does not match progress state!');
+        console.log('Fixing checkbox state to match progress...');
+        checkbox.checked = progress[category][itemIndex];
+      }
+    }
+
+    // Reset all items
+    function resetChecklist() {
+      if (confirm('Are you sure you want to reset all items? This cannot be undone.')) {
+        const progress = {};
+        categories.forEach(category => {
+          progress[category] = new Array(itemsPerCategory).fill(false);
+        });
+        saveProgress(progress);
+        
+        // Uncheck all checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        
+        // Remove completed styling
+        document.querySelectorAll('.checklist-item').forEach(item => {
+          item.classList.remove('completed');
+        });
+        
+        updateProgress();
+      }
+    }
+
+    // Print checklist
+    function printChecklist() {
+      window.print();
+    }
+
+    // Save inspection (for compatibility with existing dashboard)
+    function saveInspection() {
+      const propertyName = document.getElementById('inspectionPropertyName').value;
+      if (!propertyName) {
+        alert('Please select a property for this inspection.');
+        return;
+      }
+      
+      const progress = loadProgress();
+      saveProgress(progress);
+      alert('Inspection saved successfully!');
+      updateDashboard();
+    }
+
+    // Start inspection from dashboard
+    function startInspection(propertyName) {
+      const dropdown = document.getElementById('inspectionPropertyName');
+      dropdown.value = propertyName;
+      showTab('checklist');
+      loadInspectionForProperty(propertyName);
+    }
+
+    // Load inspection for selected property
+    function loadInspectionForProperty(propertyName) {
+      const saved = localStorage.getItem('propertyInspections');
+      if (saved) {
+        const inspections = JSON.parse(saved);
+        const progress = inspections[propertyName];
+        if (progress) {
+          categories.forEach(category => {
+            progress[category].forEach((completed, index) => {
+              const checkbox = document.getElementById(`${category}-${index}`);
+              const itemElement = document.querySelector(`[data-category="${category}"][data-item="${index}"]`);
+              
+              checkbox.checked = completed;
+              if (completed) {
+                itemElement.classList.add('completed');
+              } else {
+                itemElement.classList.remove('completed');
+              }
+            });
+          });
+          
+          updateProgress();
+        }
+      }
+    }
+
+    // Load inspection for selected property from dropdown
+    function loadInspectionForSelectedProperty() {
+      const selectedProperty = document.getElementById('inspectionPropertyName').value;
+      if (!selectedProperty) {
+        // Clear all checkboxes if no property is selected
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        
+        document.querySelectorAll('.checklist-item').forEach(item => {
+          item.classList.remove('completed');
+        });
+        
+        updateProgress();
+        return;
+      }
+      
+      loadInspectionForProperty(selectedProperty);
+    }
+
+    // Get inspection status for dashboard
+    function getInspectionStatus(propertyName) {
+      const saved = localStorage.getItem('propertyInspections');
+      if (saved) {
+        const inspections = JSON.parse(saved);
+        const progress = inspections[propertyName];
+        if (progress) {
+          const totalCompleted = categories.reduce((sum, category) => {
+            return sum + progress[category].filter(Boolean).length;
+          }, 0);
+          const percentage = Math.round((totalCompleted / totalItems) * 100);
+          
+          if (percentage === 100) {
+            return '<span class="inspection-complete">✓ Inspection Complete</span>';
+          } else if (percentage > 0) {
+            return `<span class="inspection-pending">${percentage}% Complete</span>`;
+          }
+        }
+      }
+      return '<span style="color: #888;">No inspection started</span>';
+    }
+
+    // Populate property dropdown with saved calculations
+    function populatePropertyDropdown() {
+      const dropdown = document.getElementById('inspectionPropertyName');
+      const savedProperties = getSavedCalculations();
+      
+      // Clear existing options except the first one
+      dropdown.innerHTML = '<option value="">-- Select a property --</option>';
+      
+      // Add saved properties to dropdown
+      savedProperties.forEach(property => {
+        const option = document.createElement('option');
+        option.value = property.name;
+        option.textContent = `${property.name} (${property.homePriceFormatted})`;
+        dropdown.appendChild(option);
+      });
+    }
+
+    // Load inspection for selected property
+    function loadInspectionForSelectedProperty() {
+      const selectedProperty = document.getElementById('inspectionPropertyName').value;
+      if (!selectedProperty) {
+        // Clear all checkboxes if no property is selected
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        
+        document.querySelectorAll('.checklist-item').forEach(item => {
+          item.classList.remove('completed');
+        });
+        
+        updateChecklistProgress();
+        return;
+      }
+      
+      loadInspectionForProperty(selectedProperty);
+    }
+
+    // Dashboard Functions
+    function updateDashboard() {
+      const properties = getSavedProperties();
+      const saved = localStorage.getItem('propertyInspections');
+      const inspections = saved ? JSON.parse(saved) : {};
+      
+      // Update stats
+      document.getElementById('totalProperties').textContent = properties.length;
+      
+      const completeInspections = Object.values(inspections).filter(progress => {
+        const totalCompleted = categories.reduce((sum, category) => {
+          return sum + progress[category].filter(Boolean).length;
+        }, 0);
+        return totalCompleted === totalItems;
+      }).length;
+      
+      document.getElementById('inspectionsComplete').textContent = completeInspections;
+      
+      // Update property list
+      const dashboardContainer = document.getElementById('dashboardProperties');
+      if (properties.length === 0) {
+        dashboardContainer.innerHTML = '<p style="color: #888;">No properties added yet</p>';
+        return;
+      }
+      
+      dashboardContainer.innerHTML = properties.map((property, index) => `
+        <div class="property-card">
+          <div class="property-header">
+            <div class="property-name">${property.name}</div>
+            <div class="property-actions">
+              <button class="btn-small btn-success" onclick="startInspection('${property.name}')">Inspect</button>
+              <button class="btn-small btn-secondary" onclick="deleteProperty(${index})">Delete</button>
+            </div>
+          </div>
+          <div class="inspection-status">
+            ${getInspectionStatus(property.name)}
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+            Monthly Payment: ${property.totalMonthly} | Price: ${property.homePriceFormatted}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function exportData() {
+      const properties = getSavedProperties();
+      const saved = localStorage.getItem('propertyInspections');
+      const inspections = saved ? JSON.parse(saved) : {};
+      
+      const data = {
+        properties: properties,
+        inspections: inspections,
+        exportDate: new Date().toISOString()
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'home-buyer-toolkit-data.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Initialize the application
+    function initializeApp() {
+      // Set up calculator form
+      document.getElementById('expense-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        function getNumericInput(id) {
+          const rawValue = document.getElementById(id).value;
+          const cleanValue = rawValue.replace(/,/g, '');
+          const numericValue = parseFloat(cleanValue);
+          return numericValue;
+        }
+
+        const form = getFormValues();
+        let name = form.name;
+        if (!name) {
+          // Auto-generate name if blank
+          const now = new Date();
+          const dateStr = now.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+          name = `Property $${formatNumberWithCommas(form.homePrice)} - ${dateStr}`;
+        }
+
+        const homePrice = getNumericInput('homePrice');
+        const downPaymentPercent = parseFloat(document.getElementById('downPayment').value);
+        const interestRate = parseFloat(document.getElementById('interestRate').value);
+        const hoa = getNumericInput('hoa');
+        const propertyTaxAnnual = getNumericInput('propertyTax');
+        const insurancePerYear = getNumericInput('insurance');
+
+        // 2. Calculate loan amount (home price minus down payment)
+        const downPayment = homePrice * (downPaymentPercent / 100);
+        const loanAmount = homePrice - downPayment;
+
+        // 3. Calculate monthly mortgage payment
+        const monthlyInterestRate = (interestRate / 100) / 12;
+        const totalPayments = 30 * 12; // 30-year fixed mortgage
+        let monthlyMortgage = 0;
+        if (monthlyInterestRate > 0) {
+          monthlyMortgage = loanAmount * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalPayments)) /
+            (Math.pow(1 + monthlyInterestRate, totalPayments) - 1);
+        } else {
+          monthlyMortgage = loanAmount / totalPayments;
+        }
+
+        // 4. Calculate monthly property tax (now entered as annual $ amount)
+        const monthlyTax = propertyTaxAnnual / 12;
+
+        // 5. Calculate monthly insurance
+        const monthlyInsurance = insurancePerYear / 12;
+
+        // 6. Monthly HOA is entered directly
+        const monthlyHOA = hoa;
+
+        // 7. Calculate total monthly payment
+        const totalMonthly = monthlyMortgage + monthlyTax + monthlyInsurance + monthlyHOA;
+
+        // 8. Display results, rounded to 2 decimals
+        document.getElementById('monthlyMortgage').textContent = formatCurrency(monthlyMortgage);
+        document.getElementById('monthlyHOA').textContent = formatCurrency(monthlyHOA);
+        document.getElementById('monthlyTax').textContent = formatCurrency(monthlyTax);
+        document.getElementById('monthlyInsurance').textContent = formatCurrency(monthlyInsurance);
+        document.getElementById('totalMonthly').textContent = formatCurrency(totalMonthly);
+        document.getElementById('results').style.display = 'block';
+
+        // Save calculation (manual save, not auto-save)
+        // Save to localStorage and track last action
+        let arr = getSavedCalculations();
+        if (arr.length >= 10) arr = arr.slice(1);
+        const newProperty = {
+          name,
+          homePrice: form.homePrice,
+          downPayment: form.downPayment,
+          interestRate: form.interestRate,
+          hoa: form.hoa,
+          propertyTax: form.propertyTax,
+          insurance: form.insurance,
+          monthlyMortgage: formatCurrency(monthlyMortgage),
+          monthlyHOA: formatCurrency(monthlyHOA),
+          monthlyTax: formatCurrency(monthlyTax),
+          monthlyInsurance: formatCurrency(monthlyInsurance),
+          totalMonthly: formatCurrency(totalMonthly),
+          homePriceFormatted: '$' + formatNumberWithCommas(form.homePrice)
+        };
+        arr.push(newProperty);
+        setSavedCalculations(arr);
+        lastAction = { type: 'add', property: newProperty, index: arr.length - 1 };
+        updateGlobalUndoBtn();
+        renderSavedCalculations();
+        
+        // Clear the form for the next property entry
+        document.getElementById('propertyName').value = '';
+        document.getElementById('homePrice').value = '';
+        document.getElementById('downPayment').value = '';
+        document.getElementById('interestRate').value = '';
+        document.getElementById('hoa').value = '';
+        document.getElementById('propertyTax').value = '';
+        document.getElementById('insurance').value = '';
+        
+        // Hide results section
+        document.getElementById('results').style.display = 'none';
+        
+        // Focus on the property name field for quick entry
+        document.getElementById('propertyName').focus();
+      });
+
+      // Apply comma formatting to input fields
+      addBlurFocusCommaFormatting('homePrice');
+      addBlurFocusCommaFormatting('hoa');
+      addBlurFocusCommaFormatting('propertyTax');
+      addBlurFocusCommaFormatting('insurance');
+
+      // Initialize checklist with working code from original inspection checklist
+      function initializeChecklist() {
+        const progress = loadProgress();
+        
+        // Set up event listeners for all checklist items
+        document.querySelectorAll('.checklist-item').forEach(item => {
+          const category = item.getAttribute('data-category');
+          const itemIndex = parseInt(item.getAttribute('data-item'));
+          const checkbox = item.querySelector('input[type="checkbox"]');
+          
+          // Set initial state
+          checkbox.checked = progress[category][itemIndex];
+          if (progress[category][itemIndex]) {
+            item.classList.add('completed');
+          }
+          
+          // Simplified event handling - only use checkbox change event
+          checkbox.addEventListener('change', () => {
+            console.log('=== CHECKBOX CHANGE DEBUG ===');
+            console.log('Checkbox changed:', category, itemIndex, 'checked:', checkbox.checked);
+            toggleItem(category, itemIndex);
+          });
+          
+          // Add click event listener for the entire item (but prevent double-trigger)
+          item.addEventListener('click', (e) => {
+            console.log('=== CLICK EVENT DEBUG ===');
+            console.log('Item clicked:', category, itemIndex);
+            console.log('Click target:', e.target);
+            
+            // Only toggle if not clicking directly on checkbox
+            if (e.target.type !== 'checkbox') {
+              e.preventDefault();
+              checkbox.checked = !checkbox.checked;
+              console.log('Toggled checkbox to:', checkbox.checked);
+              // The change event will handle the toggleItem call
+            }
+          });
+        });
+        
+        // Update progress display
+        updateProgress();
+        
+        // Debug: Show initial state
+        console.log('=== INITIALIZATION COMPLETE ===');
+        console.log('All checkboxes should now match progress state');
+      }
+      
+      // Initialize displays
+      renderSavedCalculations();
+      updateDashboard();
+      updateGlobalUndoBtn();
+      populatePropertyDropdown();
+      initializeChecklist();
+    }
+
+    // Start the app when page loads
+    document.addEventListener('DOMContentLoaded', initializeApp);
+  </script>
+</body>
+</html> 
