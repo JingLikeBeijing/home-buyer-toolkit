@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Inspection Checklist</title>
+  <style>
+    /* --- CSS for a clean, professional look --- */
+    body {
+      background: #f4f6f8;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      max-width: 800px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #2d3a4b;
+      font-size: 1.6rem;
+    }
+    .overall-progress {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .overall-progress h2 {
+      margin: 0 0 0.5rem 0;
+      color: #2d3a4b;
+      font-size: 1.2rem;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    .progress-fill {
+      height: 100%;
+      transition: width 0.3s ease, background-color 0.3s ease;
+      border-radius: 4px;
+    }
+    .progress-fill.red { background-color: #ef4444; }
+    .progress-fill.yellow { background-color: #eab308; }
+    .progress-fill.green { background-color: #22c55e; }
+    .category {
+      margin-bottom: 2rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .category-header {
+      background: #f3f4f6;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .category-header h3 {
+      margin: 0;
+      color: #2d3a4b;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .category-progress {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-top: 0.3rem;
+    }
+    .category-items {
+      padding: 1rem 1.5rem;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .checklist-item:hover {
+      background-color: #f9fafb;
+    }
+    .checklist-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-right: 0.8rem;
+      cursor: pointer;
+      accent-color: #2563eb;
+    }
+    .checklist-item label {
+      cursor: pointer;
+      flex: 1;
+      color: #374151;
+      font-size: 1rem;
+    }
+    .checklist-item.completed label {
+      text-decoration: line-through;
+      color: #6b7280;
+    }
+    .button-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      justify-content: center;
+    }
+    button {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #1e40af;
+    }
+    .btn-danger {
+      background: #ef4444;
+      color: #fff;
+    }
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+    @media print {
+      body {
+        background: white;
+        display: block;
+      }
+      .container {
+        box-shadow: none;
+        max-width: none;
+        padding: 1rem;
+      }
+      .button-row {
+        display: none;
+      }
+      .checklist-item {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Home Inspection Checklist</h1>
+    
+    <!-- Overall Progress -->
+    <div class="overall-progress">
+      <h2 id="overallTitle">Overall Progress: 0/36 complete (0%)</h2>
+      <div class="progress-bar">
+        <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- Electrical -->
+    <div class="category">
+      <div class="category-header">
+        <h3>Electrical</h3>
+        <div class="category-progress" id="electricalProgress">Electrical: 0/6 complete (0%)</div>
+      </div>
+      <div class="category-items">
+        <div class="checklist-item" data-category="electrical" data-item="0">
+          <input type="checkbox" id="electrical-0">
+          <label for="electrical-0">All outlets functional</label>
+        </div>
+        <div class="checklist-item" data-category="electrical" data-item="1">
+          <input type="checkbox" id="electrical-1">
+          <label for="electrical-1">GFCI outlets in bathrooms/kitchen</label>
+        </div>
+        <div class="checklist-item" data-category="electrical" data-item="2">
+          <input type="checkbox" id="electrical-2">
+          <label for="electrical-2">Electrical panel labeled and accessible</label>
+        </div>
+        <div class="checklist-item" data-category="electrical" data-item="3">
+          <input type="checkbox" id="electrical-3">
+          <label for="electrical-3">Light switches work properly</label>
+        </div>
+        <div class="checklist-item" data-category="electrical" data-item="4">
+          <input type="checkbox" id="electrical-4">
+          <label for="electrical-4">Ceiling fans operate correctly</label>
+        </div>
+        <div class="checklist-item" data-category="electrical" data-item="5">
+          <input type="checkbox" id="electrical-5">
+          <label for="electrical-5">Smoke detectors installed and working</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plumbing -->
+    <div class="category">
+      <div class="category-header">
+        <h3>Plumbing</h3>
+        <div class="category-progress" id="plumbingProgress">Plumbing: 0/6 complete (0%)</div>
+      </div>
+      <div class="category-items">
+        <div class="checklist-item" data-category="plumbing" data-item="0">
+          <input type="checkbox" id="plumbing-0">
+          <label for="plumbing-0">Water pressure adequate throughout house</label>
+        </div>
+        <div class="checklist-item" data-category="plumbing" data-item="1">
+          <input type="checkbox" id="plumbing-1">
+          <label for="plumbing-1">No visible leaks under sinks</label>
+        </div>
+        <div class="checklist-item" data-category="plumbing" data-item="2">
+          <input type="checkbox" id="plumbing-2">
+          <label for="plumbing-2">Toilets flush and don't rock</label>
+        </div>
+        <div class="checklist-item" data-category="plumbing" data-item="3">
+          <input type="checkbox" id="plumbing-3">
+          <label for="plumbing-3">Hot water heater functional</label>
+        </div>
+        <div class="checklist-item" data-category="plumbing" data-item="4">
+          <input type="checkbox" id="plumbing-4">
+          <label for="plumbing-4">All drains clear properly</label>
+        </div>
+        <div class="checklist-item" data-category="plumbing" data-item="5">
+          <input type="checkbox" id="plumbing-5">
+          <label for="plumbing-5">Visible pipes in good condition</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- HVAC -->
+    <div class="category">
+      <div class="category-header">
+        <h3>HVAC</h3>
+        <div class="category-progress" id="hvacProgress">HVAC: 0/6 complete (0%)</div>
+      </div>
+      <div class="category-items">
+        <div class="checklist-item" data-category="hvac" data-item="0">
+          <input type="checkbox" id="hvac-0">
+          <label for="hvac-0">Heating system operates</label>
+        </div>
+        <div class="checklist-item" data-category="hvac" data-item="1">
+          <input type="checkbox" id="hvac-1">
+          <label for="hvac-1">Air conditioning cools effectively</label>
+        </div>
+        <div class="checklist-item" data-category="hvac" data-item="2">
+          <input type="checkbox" id="hvac-2">
+          <label for="hvac-2">Air filter clean/accessible</label>
+        </div>
+        <div class="checklist-item" data-category="hvac" data-item="3">
+          <input type="checkbox" id="hvac-3">
+          <label for="hvac-3">Ductwork visible and intact</label>
+        </div>
+        <div class="checklist-item" data-category="hvac" data-item="4">
+          <input type="checkbox" id="hvac-4">
+          <label for="hvac-4">Thermostat controls temperature</label>
+        </div>
+        <div class="checklist-item" data-category="hvac" data-item="5">
+          <input type="checkbox" id="hvac-5">
+          <label for="hvac-5">All vents open and unblocked</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structural -->
+    <div class="category">
+      <div class="category-header">
+        <h3>Structural</h3>
+        <div class="category-progress" id="structuralProgress">Structural: 0/6 complete (0%)</div>
+      </div>
+      <div class="category-items">
+        <div class="checklist-item" data-category="structural" data-item="0">
+          <input type="checkbox" id="structural-0">
+          <label for="structural-0">Foundation solid with no major cracks</label>
+        </div>
+        <div class="checklist-item" data-category="structural" data-item="1">
+          <input type="checkbox" id="structural-1">
+          <label for="structural-1">Walls straight with no major damage</label>
+        </div>
+        <div class="checklist-item" data-category="structural" data-item="2">
+          <input type="checkbox" id="structural-2">
+          <label for="structural-2">Floors level and no soft spots</label>
+        </div>
+        <div class="checklist-item" data-category="structural" data-item="3">
+          <input type="checkbox" id="structural-3">
+          <label for="structural-3">Ceilings intact with no water stains</label>
+        </div>
+        <div class="checklist-item" data-category="structural" data-item="4">
+          <input type="checkbox" id="structural-4">
+          <label for="structural-4">Stairs secure with proper railings</label>
+        </div>
+        <div class="checklist-item" data-category="structural" data-item="5">
+          <input type="checkbox" id="structural-5">
+          <label for="structural-5">Windows open/close and seal properly</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interior -->
+    <div class="category">
+      <div class="category-header">
+        <h3>Interior</h3>
+        <div class="category-progress" id="interiorProgress">Interior: 0/6 complete (0%)</div>
+      </div>
+      <div class="category-items">
+        <div class="checklist-item" data-category="interior" data-item="0">
+          <input type="checkbox" id="interior-0">
+          <label for="interior-0">Paint in good condition</label>
+        </div>
+        <div class="checklist-item" data-category="interior" data-item="1">
+          <input type="checkbox" id="interior-1">
+          <label for="interior-1">Flooring intact throughout</label>
+        </div>
+        <div class="checklist-item" data-category="interior" data-item="2">
+          <input type="checkbox" id="interior-2">
+          <label for="interior-2">Kitchen cabinets functional</label>
+        </div>
+        <div class="checklist-item" data-category="interior" data-item="3">
+          <input type="checkbox" id="interior-3">
+          <label for="interior-3">Major appliances operational</label>
+        </div>
+        <div class="checklist-item" data-category="interior" data-item="4">
+          <input type="checkbox" id="interior-4">
+          <label for="interior-4">Adequate closet space</label>
+        </div>
+        <div class="checklist-item" data-category="interior" data-item="5">
+          <input type="checkbox" id="interior-5">
+          <label for="interior-5">Basement/attic accessible and dry</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exterior -->
+    <div class="category">
+      <div class="category-header">
+        <h3>Exterior</h3>
+        <div class="category-progress" id="exteriorProgress">Exterior: 0/6 complete (0%)</div>
+      </div>
+      <div class="category-items">
+        <div class="checklist-item" data-category="exterior" data-item="0">
+          <input type="checkbox" id="exterior-0">
+          <label for="exterior-0">Roof appears in good condition</label>
+        </div>
+        <div class="checklist-item" data-category="exterior" data-item="1">
+          <input type="checkbox" id="exterior-1">
+          <label for="exterior-1">Siding intact with no damage</label>
+        </div>
+        <div class="checklist-item" data-category="exterior" data-item="2">
+          <input type="checkbox" id="exterior-2">
+          <label for="exterior-2">Gutters clean and properly attached</label>
+        </div>
+        <div class="checklist-item" data-category="exterior" data-item="3">
+          <input type="checkbox" id="exterior-3">
+          <label for="exterior-3">Driveway/walkways in good repair</label>
+        </div>
+        <div class="checklist-item" data-category="exterior" data-item="4">
+          <input type="checkbox" id="exterior-4">
+          <label for="exterior-4">Landscaping well-maintained</label>
+        </div>
+        <div class="checklist-item" data-category="exterior" data-item="5">
+          <input type="checkbox" id="exterior-5">
+          <label for="exterior-5">Fencing secure if present</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="button-row">
+      <button class="btn-primary" id="printBtn">Print Checklist</button>
+      <button class="btn-danger" id="resetBtn">Reset All</button>
+    </div>
+  </div>
+
+  <script>
+    // Inspection data structure
+    const categories = ['electrical', 'plumbing', 'hvac', 'structural', 'interior', 'exterior'];
+    const itemsPerCategory = 6;
+    const totalItems = categories.length * itemsPerCategory;
+
+    // Load saved progress from localStorage
+    function loadProgress() {
+      const saved = localStorage.getItem('inspectionProgress');
+      console.log('=== LOAD PROGRESS DEBUG ===');
+      console.log('Raw localStorage data:', saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        console.log('Parsed progress:', parsed);
+        return parsed;
+      }
+      // Initialize with all items unchecked
+      const progress = {};
+      categories.forEach(category => {
+        progress[category] = new Array(itemsPerCategory).fill(false);
+      });
+      console.log('Initialized new progress:', progress);
+      return progress;
+    }
+
+    // Save progress to localStorage
+    function saveProgress(progress) {
+      console.log('=== SAVE PROGRESS DEBUG ===');
+      console.log('Saving progress:', progress);
+      localStorage.setItem('inspectionProgress', JSON.stringify(progress));
+      console.log('Progress saved to localStorage');
+    }
+
+    // Update progress display
+    function updateProgress() {
+      console.log('=== UPDATE PROGRESS DEBUG ===');
+      const progress = loadProgress();
+      console.log('Current progress:', progress);
+      
+      // Update each category progress
+      categories.forEach(category => {
+        const completed = progress[category].filter(Boolean).length;
+        const percentage = Math.round((completed / itemsPerCategory) * 100);
+        const progressElement = document.getElementById(`${category}Progress`);
+        progressElement.textContent = `${category.charAt(0).toUpperCase() + category.slice(1)}: ${completed}/${itemsPerCategory} complete (${percentage}%)`;
+        console.log(`${category}: ${completed}/${itemsPerCategory} (${percentage}%)`);
+      });
+
+      // Update overall progress
+      const totalCompleted = categories.reduce((sum, category) => {
+        return sum + progress[category].filter(Boolean).length;
+      }, 0);
+      const overallPercentage = Math.round((totalCompleted / totalItems) * 100);
+      
+      console.log(`Overall: ${totalCompleted}/${totalItems} (${overallPercentage}%)`);
+      
+      document.getElementById('overallTitle').textContent = `Overall Progress: ${totalCompleted}/${totalItems} complete (${overallPercentage}%)`;
+      
+      // Update progress bar
+      const progressBar = document.getElementById('overallProgress');
+      progressBar.style.width = `${overallPercentage}%`;
+      
+      // Update progress bar color
+      progressBar.className = 'progress-fill';
+      if (overallPercentage <= 33) {
+        progressBar.classList.add('red');
+      } else if (overallPercentage <= 66) {
+        progressBar.classList.add('yellow');
+      } else {
+        progressBar.classList.add('green');
+      }
+    }
+
+    // Toggle item completion
+    function toggleItem(category, itemIndex) {
+      console.log('=== TOGGLE ITEM DEBUG ===');
+      console.log('Toggling:', category, 'item:', itemIndex);
+      
+      const progress = loadProgress();
+      console.log('Current progress for this item:', progress[category][itemIndex]);
+      
+      progress[category][itemIndex] = !progress[category][itemIndex];
+      console.log('New progress for this item:', progress[category][itemIndex]);
+      
+      saveProgress(progress);
+      updateProgress();
+      
+      // Update visual state
+      const itemElement = document.querySelector(`[data-category="${category}"][data-item="${itemIndex}"]`);
+      const checkbox = itemElement.querySelector('input[type="checkbox"]');
+      
+      console.log('Checkbox checked state:', checkbox.checked);
+      console.log('Progress state:', progress[category][itemIndex]);
+      
+      if (progress[category][itemIndex]) {
+        itemElement.classList.add('completed');
+        console.log('Added completed class');
+      } else {
+        itemElement.classList.remove('completed');
+        console.log('Removed completed class');
+      }
+      
+      // Double-check that checkbox state matches progress state
+      if (checkbox.checked !== progress[category][itemIndex]) {
+        console.log('WARNING: Checkbox state does not match progress state!');
+        console.log('Fixing checkbox state to match progress...');
+        checkbox.checked = progress[category][itemIndex];
+      }
+    }
+
+    // Reset all items
+    function resetAll() {
+      if (confirm('Are you sure you want to reset all items? This cannot be undone.')) {
+        const progress = {};
+        categories.forEach(category => {
+          progress[category] = new Array(itemsPerCategory).fill(false);
+        });
+        saveProgress(progress);
+        
+        // Uncheck all checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        
+        // Remove completed styling
+        document.querySelectorAll('.checklist-item').forEach(item => {
+          item.classList.remove('completed');
+        });
+        
+        updateProgress();
+      }
+    }
+
+    // Print checklist
+    function printChecklist() {
+      window.print();
+    }
+
+        // Initialize the checklist
+    function initializeChecklist() {
+      const progress = loadProgress();
+      
+      // Set up event listeners for all checklist items
+      document.querySelectorAll('.checklist-item').forEach(item => {
+        const category = item.getAttribute('data-category');
+        const itemIndex = parseInt(item.getAttribute('data-item'));
+        const checkbox = item.querySelector('input[type="checkbox"]');
+        
+        // Set initial state
+        checkbox.checked = progress[category][itemIndex];
+        if (progress[category][itemIndex]) {
+          item.classList.add('completed');
+        }
+        
+        // Simplified event handling - only use checkbox change event
+        checkbox.addEventListener('change', () => {
+          console.log('=== CHECKBOX CHANGE DEBUG ===');
+          console.log('Checkbox changed:', category, itemIndex, 'checked:', checkbox.checked);
+          toggleItem(category, itemIndex);
+        });
+        
+        // Add click event listener for the entire item (but prevent double-trigger)
+        item.addEventListener('click', (e) => {
+          console.log('=== CLICK EVENT DEBUG ===');
+          console.log('Item clicked:', category, itemIndex);
+          console.log('Click target:', e.target);
+          
+          // Only toggle if not clicking directly on checkbox
+          if (e.target.type !== 'checkbox') {
+            e.preventDefault();
+            checkbox.checked = !checkbox.checked;
+            console.log('Toggled checkbox to:', checkbox.checked);
+            // The change event will handle the toggleItem call
+          }
+        });
+      });
+      
+      // Set up button event listeners
+      document.getElementById('resetBtn').addEventListener('click', resetAll);
+      document.getElementById('printBtn').addEventListener('click', printChecklist);
+      
+      // Update progress display
+      updateProgress();
+      
+      // Debug: Show initial state
+      console.log('=== INITIALIZATION COMPLETE ===');
+      console.log('All checkboxes should now match progress state');
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', initializeChecklist);
+  </script>
+</body>
+</html> 
